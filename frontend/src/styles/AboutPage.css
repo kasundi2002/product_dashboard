@@ -1,0 +1,81 @@
+/* General container */
+.about-us-container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Header section */
+.about-us-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.about-us-header h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.about-us-description {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Team Section */
+.team-section {
+    text-align: center;
+}
+
+.team-section h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Styling the individual team member cards */
+.team-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.team-member-card {
+    width: 250px;
+    text-align: center;
+    border: 2px solid #4c4eaf;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.team-member-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4c57af;
+    margin-bottom: 10px;
+}
+
+.team-member-name {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.team-member-role {
+    font-size: 1.2em;
+    color: #4ca2af;
+    margin-bottom: 10px;
+}
+
+.team-member-bio {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.4;
+}

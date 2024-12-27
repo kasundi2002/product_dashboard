@@ -1,0 +1,80 @@
+/* Profile Page Container */
+.profile-container {
+    width: 80%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Header Styling */
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #5954ba;
+    margin-bottom: 10px;
+}
+
+.profile-name {
+    font-size: 2em;
+    color: #333;
+    margin: 0;
+}
+
+/* Profile Details */
+.profile-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.profile-email,
+.profile-bio {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.profile-email strong,
+.profile-bio strong {
+    font-weight: bold;
+}
+
+/* Buttons */
+.profile-actions {
+    text-align: center;
+}
+
+.edit-button,
+.logout-button {
+    background-color: #4caf50;
+    color: white;
+    font-size: 1.1em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover,
+.logout-button:hover {
+    background-color: #45a049;
+}
+
+.logout-button {
+    background-color: #f44336;
+}
+
+.logout-button:hover {
+    background-color: #e53935;
+}
