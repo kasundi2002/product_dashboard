@@ -3,10 +3,16 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const cors = require('cors'); // Import cors package
 
-// Load env vars
+// Load env vars from .env file
 dotenv.config();
 
-// Connect to database
+// Ensure that MONGO_URI is defined in .env
+if (!process.env.MONGO_URI) {
+  console.error('MONGO_URI is not defined in the environment variables');
+  process.exit(1);
+}
+
+// Connect to the database
 connectDB();
 
 const app = express();

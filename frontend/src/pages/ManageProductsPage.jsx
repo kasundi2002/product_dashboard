@@ -1,6 +1,6 @@
 import React from 'react'
 import './../styles/ManageProductsPage.css';
-import { useState , useNavigate , useEffect } from 'react';
+import { useState , useEffect } from 'react';
 
 const ManageProductsPage = () => {
     const [products, setProducts] = useState([]);
@@ -13,7 +13,7 @@ const ManageProductsPage = () => {
         stock: '',
         coverImage: null,
     });
-    const [selectedProduct, setsSelectedProduct] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const [isEdit, setIsEdit] = useState(false); // To toggle between View/Edit modes
 
     // Pagination state
@@ -70,12 +70,20 @@ const ManageProductsPage = () => {
     const handleAddProductSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
+        console.log(`Add Products: ${newProduct}`);
+        console.log(`Add Products: ${newProduct.name}`);
+        console.log(`Add Products: ${newProduct.description}`);
+        console.log(`Add Products: ${newProduct.price}`);
+        console.log(`Add Products: ${newProduct.category}`);
+        console.log(`Add Products: ${newProduct.stock}`);
+        console.log(`Add Products: ${newProduct.coverImage}`);
+
         formData.append('name', newProduct.name);
         formData.append('description', newProduct.description);
         formData.append('price', newProduct.price);
         formData.append('category', newProduct.category);
         formData.append('stock', newProduct.stock);
-        formData.append('coverImage', newProduct.coverImage);
+        
 
         if (newProduct.coverImage && newProduct.coverImage instanceof File) {
             formData.append('coverImage', newProduct.coverImage);
@@ -92,7 +100,7 @@ const ManageProductsPage = () => {
             }
 
             const data = await response.json();
-
+            console.log(data);
             // Ensure books is an array before setting the new state
             setProducts((prevProducts) => {
                 if (Array.isArray(prevProducts)) {
@@ -104,21 +112,27 @@ const ManageProductsPage = () => {
             setShowAddForm(false);
             setNewProduct({ name: '', description: '', price: '', category: '', stock: '', coverImage: null });
         } catch (error) {
-            console.error('Error adding book:', error);
+            console.error('Error adding product:', error);
         }
     };
 
-    // Open the modal to view or edit the book
-    const handleProductSelect = (product, edit = false) => {
-        console.log(`product in handleSelect:${product}`);
-        setsSelectedProduct(product);
-        setIsEdit(edit);
-        console.log(`selected product in handleSelect:${selectedProduct}`);
+    const handleProductSelect = (product,edit = false) => {
+        if (product && product.name) {
+          // If product is not null and has a 'name' property, proceed
+          console.log('Selected product:', product.name);
+          setSelectedProduct(product);
+          setIsEdit(edit);
+        } else {
+          // Handle invalid product selection
+          console.error('Invalid product selected:', product);
+        }
+      };
 
-    };
 
     // Handle the form submit for editing the selected product
     const handleEditSubmit = async (e) => {
+      console.log(`Inside edit product`);
+
         e.preventDefault();
 
         console.log(`selected product:${selectedProduct._id}`);
@@ -150,7 +164,7 @@ try {
 
             const updatedProduct = await response.json();
             setProducts(products.map((product) => (product._id === updatedProduct._id ? updatedProduct : product)));
-            setsSelectedProduct(null); // Close modal
+            setSelectedProduct(null); // Close modal
         } catch (error) {
             console.error('Error updating book:', error);
         }
@@ -203,7 +217,7 @@ try {
                         type="text"
                         placeholder="price"
                         value={newProduct.price}
-                        onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                        onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
                         required
                     /> 
                
@@ -251,7 +265,8 @@ try {
                     </thead>
                     <tbody>
                         {currentProducts.map((product) => (
-                            <tr key={product.name}>
+                            <tr key={product._id}>
+                                <td>{product.name}</td>
                                 <td>{product.description}</td>
                                 <td>{product.price}</td>
                                 <td>{product.category}</td>
@@ -301,27 +316,27 @@ try {
                             <input
                                 type="text"
                                 value={selectedProduct.name}
-                                onChange={(e) => setsSelectedProduct({ ...selectedProduct, name: e.target.value })}
+                                onChange={(e) => setSelectedProduct({ ...selectedProduct, name: e.target.value })}
                                 disabled={!isEdit}
                                 required
                             />
                             <input
                                 type="text"
                                 value={selectedProduct.description}
-                                onChange={(e) => setsSelectedProduct({ ...selectedProduct, description: e.target.value })}
+                                onChange={(e) => setSelectedProduct({ ...selectedProduct, description: e.target.value })}
                                 disabled={!isEdit}
                                 required
                             />
                             <input
                                 type="text"
                                 value={selectedProduct.price}
-                                onChange={(e) => setsSelectedProduct({ ...selectedProduct, price: e.target.value })}
+                                onChange={(e) => setSelectedProduct({ ...selectedProduct, price: e.target.value })}
                                 disabled={!isEdit}
                                 required
                             />                            
                             <select
                                 value={selectedProduct.category}
-                                onChange={(e) => setsSelectedProduct({ ...selectedProduct, category: e.target.value })}
+                                onChange={(e) => setSelectedProduct({ ...selectedProduct, category: e.target.value })}
                                 disabled={!isEdit} // Disable when not in edit mode
                                 required
                             >
@@ -336,14 +351,14 @@ try {
                             <input
                                 type="text"
                                 value={selectedProduct.stock}
-                                onChange={(e) => setsSelectedProduct({ ...selectedProduct, stock: e.target.value })}
+                                onChange={(e) => setSelectedProduct({ ...selectedProduct, stock: e.target.value })}
                                 disabled={!isEdit}
                                 required
                             />        
                             {isEdit && (
                                 <input
                                     type="file"
-                                    onChange={(e) => setsSelectedProduct({ ...selectedProduct, coverImage: e.target.files[0] })}
+                                    onChange={(e) => setSelectedProduct({ ...selectedProduct, coverImage: e.target.files[0] })}
                                     accept="image/*"
                                 />
                             )}
@@ -351,7 +366,7 @@ try {
                                 <button type="submit" className="btn save">Save Changes</button>
                             )}
                         </form>
-                        <button className="btn close" onClick={() => setsSelectedProduct(null)}>
+                        <button className="btn close" onClick={() => setSelectedProduct(null)}>
                             Close
                         </button>
                     </div>
