@@ -33,6 +33,8 @@ const getProducts = async (req, res) => {
   console.log(`Inside get products controller`);
   try {
     const products = await Product.find();
+    console.log(`Inside get products controller:${products}`);
+    
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
